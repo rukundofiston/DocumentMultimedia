@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for line in $(ls val/ann); do
+
+name=$( echo $line | cut -d"." -f1 )
+./script_collapse_histo_ann val/svm/color.svm val/ann/$name.ann > val/svm/color_$name.svm 
+done

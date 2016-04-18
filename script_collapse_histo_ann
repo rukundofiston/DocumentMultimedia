@@ -1,0 +1,14 @@
+#!/bin/bash
+
+exec 6< $1
+while read -r line
+do
+	read -r f2line <&6
+
+	vec=$( echo ${line} | cut -d" " -f2- )
+	note=$( echo ${f2line} | cut -d" " -f2- )
+
+	if [ "$vec" -ne "0" ]; then
+		echo -e "${vec} ${note}"
+	fi
+done <$2

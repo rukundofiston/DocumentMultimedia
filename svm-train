@@ -1,0 +1,3 @@
+#!/bin/bash
+./libsvm/svm-train -w+1 19 -b 1 -g 1.0 -h 0 train/svm/color_aeroplane.svm train/model/color_aeroplane.model
+./libsvm/svm-predict -b 1 val/svm/color_aeroplane.svm train/model/color_aeroplane.model out/color_aeroplane.out

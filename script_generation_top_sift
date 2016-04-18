@@ -1,0 +1,26 @@
+#!/bin/bash
+
+concept=$( basename $2 | cut -d"_" -f2 | cut -d"." -f1 )
+
+label=$( head -n1 $2 | cut -d" " -f2 )
+
+l=2
+if [ "$label" -ne "1" ]; then
+  l=3
+fi
+
+tail -n +2 $2 > $2tmp
+
+exec 6< $1
+while read -r line
+do
+	read -r f2line <&6
+
+	img=$( echo $f2line | cut -d" " -f1 ) 
+	score=$( echo $line | cut -d" " -f$l )
+
+	echo "$concept Q0 $img 0 $score R"
+
+done <$2tmp
+
+rm -f $2tmp

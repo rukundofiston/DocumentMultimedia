@@ -1,0 +1,14 @@
+#!/bin/bash
+
+for line in $(ls train/ann); do
+
+name=$( echo $line | cut -d"." -f1 )
+
+echo "==> $name :"
+./libsvm/trec_eval val/rel/$name.rel val/top/color_$name.top
+echo ""
+
+done
+
+echo "==> all :"
+./libsvm/trec_eval val/rel/all.rel val/top/color_all.top

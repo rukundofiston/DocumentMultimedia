@@ -1,0 +1,35 @@
+#!/bin/bash
+
+for line in $(ls val/1nn/*.sift); do
+	name=$( basename $line )
+	for i in $(seq 0 255); do tab[$i]=0; done
+	for line2 in $(cat $line); do
+		tab[$line2]=$(( tab[$line2] + 1 ))
+	done
+
+	echo -n "0 " >> val/histo_sift_svm/$name.histo
+	for i in $(seq 0 255); do
+		if (( ${tab[$i]} != 0 ))
+		then
+			echo -n "$i:${tab[$i]} " >> val/histo_sift_svm/$name.histo
+		fi
+	done
+
+done
+
+for line in $(ls train/1nn/*.sift); do
+	name=$( basename $line )
+	for i in $(seq 0 255); do tab[$i]=0; done
+
+	for line2 in $(cat $line); do
+		tab[$line2]=$(( tab[$line2] + 1 ))
+	done
+
+	echo -n "0 " >> train/histo_sift_svm/$name.histo
+	for i in $(seq 0 255); do 
+		if (( ${tab[$i]} != 0 ))
+		then
+			echo -n "$i:${tab[$i]} " >> train/histo_sift_svm/$name.histo
+		fi
+	done
+done

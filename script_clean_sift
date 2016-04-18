@@ -1,0 +1,22 @@
+#!/bin/bash
+
+input="/home/m/mulhemp/sift/train/$1"
+inputtmp="train/sift/$1.tmp"
+output="train/sift/$1.clean"
+
+tail -n +4 $input | cut -d";" -f2 | cut -d" " -f2- > $inputtmp
+
+rm -f $output
+
+i=75
+while read line
+do  
+	if (( $i == 75 )); then
+		echo $line >> $output
+		i=1
+	else
+		i=$(( $i + 1 ))		
+	fi
+done < $inputtmp
+
+rm -f $inputtmp
